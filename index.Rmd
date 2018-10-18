@@ -14,4 +14,4 @@ Or, link directly to my [about page](about.html).
 
 ### Imbed pictures
 
-<img src="images/att.jpg" style="width:75%">
+<img src = "images/att.jpg" style = "width:75%">
