@@ -12,16 +12,8 @@ And I can put all kinds of stuff on it!
 
 Or, link directly to my [about page](about.html).
 
+This is my [code page](code.html).
+
 ### Imbed pictures
 
 <img src = "images/att.jpg" style = "width:75%">
-
-```{r}
-library(tidyverse)
-
-tibble(
-    x = 1:10,
-    y = x + 2
-)
-```
-
