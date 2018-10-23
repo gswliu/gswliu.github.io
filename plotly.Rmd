@@ -17,7 +17,9 @@ library(p8105.datasets)
 library(plotly)
 ```
 
-```{r}
+
+## Plotly scatterplot
+```{r scatterplot}
 set.seed(1)
 
 data(nyc_airbnb)
@@ -40,5 +42,45 @@ nyc_airbnb %>%
           alpha = 0.5, 
           color = ~price,
           text = ~text_label)
+```
+
+## Plotly boxplot
+```{r boxplot}
+common_neighborhoods =
+  nyc_airbnb %>% 
+  count(neighbourhood, sort = TRUE) %>% 
+  top_n(8) %>% 
+  select(neighbourhood)
+## Selecting by n
+
+inner_join(nyc_airbnb, common_neighborhoods,
+             by = "neighbourhood") %>% 
+  mutate(neighbourhood = fct_reorder(neighbourhood, price)) %>% 
+  plot_ly(y = ~price, color = ~neighbourhood, type = "box",
+          colors = "Set2")
+```
+
+## Plotly bar chart
+```{r bar chart}
+nyc_airbnb %>% 
+  count(neighbourhood) %>% 
+  mutate(neighbourhood = fct_reorder(neighbourhood, n)) %>% 
+  plot_ly(x = ~neighbourhood, y = ~n, color = ~neighbourhood, type = "bar")
+```
+
+## ggplotly
+
+You _can_ convert a ggplot object straight to an interactive graphic using ggplotly.  
+
+```{r}
+scatter_ggplot = 
+  nyc_airbnb %>%
+  ggplot(aes(x = longitude, y = latitude, color = price)) +
+  geom_point(alpha = 0.25) +
+  scale_color_viridis() +
+  coord_cartesian() +
+  theme_classic()
+
+ggplotly(scatter_ggplot)
 ```
 
