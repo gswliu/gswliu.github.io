@@ -3,8 +3,7 @@ title: "Grace S. Liu"
 output:
   html_document
 ---
-Second-year MPH student  
-Department of Epidemiology  
+MPH student, Department of Epidemiology
 Columbia University, Mailman School of Public Health  
 
 <img src = "images/PLACEHOLDER" 
@@ -20,6 +19,7 @@ I previously worked as a technical research analyst in Global Health Science at 
 ##### Contact Information
 
 Grace Liu  
+New York, NY  
 Email: [gsl2116@cumc.columbia.edu](mailto:<gsl2116@cumc.columbia.edu>)  
 Phone: 510.565.6321  
 

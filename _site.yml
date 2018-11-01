@@ -9,5 +9,7 @@ navbar:
       href: mailto:<gsl2116@cumc.columbia.edu>
     - icon: fa-github fa-lg
       href: http://github.com/gswliu/
+    - icon: fa-linkedin fa-lg
+      href: https://www.linkedin.com/in/gswliu/
 output:
   html_document
