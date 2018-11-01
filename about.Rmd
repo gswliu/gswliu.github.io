@@ -1,9 +1,20 @@
 ---
 title: "About"
 ---
+<img src = "images/att.jpg" 
+  style="width:400px; display: block; margin-left: auto; margin-right: auto; border: 5px solid">
+<br>
 
-### About this site
+### About me
+In 2014, I received a BA in public health, with a concentration in Health Policy and Management, from University of California, Berkeley. I am now a second-year MPH student in Epidemiology, pursuing an Advanced Epidemiology certificate, at the Mailman School of Public Health at Columbia University.  
 
-Sometimes you need to say a bit about the site -- how it was made, where it's hosted, where the source code can be found. 
+I believe that health systems strengthening and robust disease surveillance are crucial in efforts to relieve burdens of health issues, and strong local engagement in program implementation and robust outcome monitoring and reporting are key to program effectiveness and sustainability.  
 
-If this is for a project or analysis, I recommend giving some details about the R package versions that you used to create the content.
+On a personal level, I am a California native who enjoys watching and cheering for Bay Area sports teams, trying new foods and restaurants, and exploring a new-found love of yoga.  
+<br>
+
+### Experience
+I previously worked as a technical research analyst in Global Health Science at University of California, San Francisco. I have worked on a number of international projects related to HIV prevention, care, and treatment, as well as for an initiative addressing preterm birth in East Africa. I am primarily interested in “leakages” along the HIV care continuum; maternal, neonatal, and child health; health systems strengthening; and implementation science.  
+<br>
+
+Feel free to contact me via [email](mailto:<gsl2116@cumc.columbia.edu>) or [LinkedIn](https://www.linkedin.com/in/gswliu/)!
