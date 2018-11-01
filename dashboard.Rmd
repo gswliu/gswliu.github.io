@@ -1,5 +1,5 @@
 ---
-title: "Untitled"
+title: "NYC Restaurant Inspections"
 output: 
   flexdashboard::flex_dashboard:
     orientation: columns
@@ -12,27 +12,40 @@ library(viridis)
 library(plotly)
 library(flexdashboard)
 library(p8105.datasets)
+
+nycrest_data = rest_inspec %>% 
+  janitor::clean_names() %>% 
+  drop_na(action) %>% 
+  drop_na(score) %>% 
+  subset(boro != "Missing")
 ```
 
-Instacart {data-width=650}
+Column 1 {data-width=650}
 -----------------------------------------------------------------------
 
-### Instacart
+### Graph 1
 
-```{r}
-
+```{r data_clean, include=FALSE}
+nycrest_data %>%
+  mutate(text_label = str_c("Boro: ", boro, '\nRating: ', score)) %>% 
+  plot_ly(y = ~score, x = ~boro, type = "box",
+          alpha = 0.5, 
+          colors = "Set2",
+          text = ~text_label)
 ```
 
-NY NOAA {data-width=350}
+Column 2 {data-width=350}
 -----------------------------------------------------------------------
 
-### NY NOAA
-
+### Graph 2
 ```{r}
-
+nycrest_data %>% 
+  count(boro) %>% 
+  mutate(boro = fct_reorder(boro, n)) %>% 
+  plot_ly(x = ~boro, y = ~n, color = ~boro, type = "bar")
 ```
 
-###  NYC Restaurant Inspections
+###  Graph 3
 
 ```{r}
 
