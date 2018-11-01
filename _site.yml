@@ -11,5 +11,7 @@ navbar:
       href: http://github.com/gswliu/
     - icon: fa-linkedin fa-lg
       href: https://www.linkedin.com/in/gswliu/
+    - icon: fa-glasses fa-lg
+      href: https://gswliu.github.io/LiuGrace_CV_Sep2018.pdf
 output:
   html_document

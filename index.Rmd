@@ -22,10 +22,5 @@ Grace Liu
 New York, NY  
 Email: [gsl2116@cumc.columbia.edu](mailto:<gsl2116@cumc.columbia.edu>)  
 Phone: 510.565.6321  
-
-[Google](https://www.google.com) it.
-
-Or, link directly to my [about page](about.html).
-
-This is my [code page](code.html).
+[About me](about.html)
 
