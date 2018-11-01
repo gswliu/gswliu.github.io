@@ -1,0 +1,39 @@
+---
+title: "Untitled"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: fill
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library(viridis)
+library(plotly)
+library(flexdashboard)
+library(p8105.datasets)
+```
+
+Instacart {data-width=650}
+-----------------------------------------------------------------------
+
+### Instacart
+
+```{r}
+
+```
+
+NY NOAA {data-width=350}
+-----------------------------------------------------------------------
+
+### NY NOAA
+
+```{r}
+
+```
+
+###  NYC Restaurant Inspections
+
+```{r}
+
+```
