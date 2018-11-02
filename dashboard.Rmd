@@ -13,40 +13,47 @@ library(plotly)
 library(flexdashboard)
 library(p8105.datasets)
 
-nycrest_data = rest_inspec %>% 
+instacart_data = instacart %>% 
   janitor::clean_names() %>% 
   drop_na(action) %>% 
   drop_na(score) %>% 
+  drop_na(grade) %>% 
   subset(boro != "Missing")
 ```
 
-Column 1 {data-width=650}
+Cuisine Types {data-width=650}
 -----------------------------------------------------------------------
 
-### Graph 1
-
+### Most Common Cuisines
 ```{r}
-nycrest_data %>%
-  mutate(text_label = str_c("Boro: ", boro, '\nRating: ', score)) %>% 
-  plot_ly(y = ~score, x = ~boro, type = "box",
-          alpha = 0.5, 
-          colors = "Set2",
-          text = ~text_label)
+common_cuisines =
+  nycrest_data %>% 
+  count(cuisine_description, sort = TRUE) %>% 
+  top_n(30) %>% 
+  select(cuisine_description)
+
+inner_join(nycrest_data, common_cuisines,
+             by = "cuisine_description") %>% 
+  count(cuisine_description) %>% 
+  mutate(cuisine_description = fct_reorder(cuisine_description, n)) %>% 
+  plot_ly(x = ~cuisine_description, y = ~n, color = ~cuisine_description, type = "bar")
 ```
 
-Column 2 {data-width=350}
+Restaurant Inspections {data-width=350}
 -----------------------------------------------------------------------
 
-### Graph 2
+### Scores, by boro
 ```{r}
 nycrest_data %>% 
-  count(boro) %>% 
-  mutate(boro = fct_reorder(boro, n)) %>% 
-  plot_ly(x = ~boro, y = ~n, color = ~boro, type = "bar")
+  mutate(boro = fct_reorder(boro, score)) %>% 
+  plot_ly(y = ~score, color = ~boro, type = "box", alpha = 0.5)
 ```
 
-###  Graph 3
+###  Restaurant grades
 
 ```{r}
-
+nycrest_data %>% 
+  count(grade) %>% 
+  mutate(grade = fct_reorder(grade, n)) %>% 
+  plot_ly(x = ~grade, y = ~n, color = ~grade, type = "bar")
 ```
