@@ -21,7 +21,7 @@ nycrest_data = rest_inspec %>%
 common_cuisines =
   nycrest_data %>% 
   count(cuisine_description, sort = TRUE) %>% 
-  top_n(10) %>% 
+  top_n(8) %>% 
   select(cuisine_description)
 ```
 
