@@ -48,7 +48,8 @@ Restaurant Inspections {data-width=350}
 nycrest_data %>% 
   mutate(boro = fct_reorder(boro, score)) %>% 
   plot_ly(y = ~score, color = ~boro, type = "box", alpha = 0.5) %>% 
-    layout(legend = list(orientation = "h", xanchor = "center", x = 0.5))
+    layout(legend = list(orientation = "h", xanchor = "center", x = 0.5),
+          xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE))
 ```
 
 ###  Restaurant grades
@@ -57,5 +58,6 @@ nycrest_data %>%
   count(grade) %>% 
   mutate(grade = fct_reorder(grade, n)) %>% 
   plot_ly(x = ~grade, y = ~n, color = ~grade, type = "bar") %>% 
-    layout(legend = list(orientation = "h", xanchor = "center", x = 0.5))
+    layout(legend = list(orientation = "h", xanchor = "center", x = 0.5),
+          xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE))
 ```
