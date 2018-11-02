@@ -35,11 +35,9 @@ inner_join(nycrest_data, common_cuisines,
   count(cuisine_description) %>% 
   mutate(cuisine_description = fct_reorder(cuisine_description, n)) %>% 
   plot_ly(x = ~cuisine_description, y = ~n, color = ~cuisine_description, type = "bar") %>% 
-    layout(legend = list(text = "Cuisine type", orientation = "h",
-                     xanchor = "center",
-                     x = 0.5),
+    layout(legend = list(orientation = "h", xanchor = "center", x = 0.5),
           xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE)
-           )
+    )
 ```
 
 Restaurant Inspections {data-width=350}
@@ -49,7 +47,8 @@ Restaurant Inspections {data-width=350}
 ```{r}
 nycrest_data %>% 
   mutate(boro = fct_reorder(boro, score)) %>% 
-  plot_ly(y = ~score, color = ~boro, type = "box", alpha = 0.5)
+  plot_ly(y = ~score, color = ~boro, type = "box", alpha = 0.5) %>% 
+    layout(legend = list(orientation = "h", xanchor = "center", x = 0.5))
 ```
 
 ###  Restaurant grades
@@ -57,5 +56,6 @@ nycrest_data %>%
 nycrest_data %>% 
   count(grade) %>% 
   mutate(grade = fct_reorder(grade, n)) %>% 
-  plot_ly(x = ~grade, y = ~n, color = ~grade, type = "bar")
+  plot_ly(x = ~grade, y = ~n, color = ~grade, type = "bar") %>% 
+    layout(legend = list(orientation = "h", xanchor = "center", x = 0.5))
 ```
