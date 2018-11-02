@@ -13,30 +13,33 @@ library(plotly)
 library(flexdashboard)
 library(p8105.datasets)
 
-instacart_data = instacart %>% 
+nycrest_data = rest_inspec %>% 
   janitor::clean_names() %>% 
-  drop_na(action) %>% 
-  drop_na(score) %>% 
-  drop_na(grade) %>% 
+  drop_na(action, score, grade) %>% 
   subset(boro != "Missing")
+
+common_cuisines =
+  nycrest_data %>% 
+  count(cuisine_description, sort = TRUE) %>% 
+  top_n(10) %>% 
+  select(cuisine_description)
 ```
 
 Cuisine Types {data-width=650}
 -----------------------------------------------------------------------
 
-### Most Common Cuisines
+### 10 Most Common Cuisines
 ```{r}
-common_cuisines =
-  nycrest_data %>% 
-  count(cuisine_description, sort = TRUE) %>% 
-  top_n(30) %>% 
-  select(cuisine_description)
-
 inner_join(nycrest_data, common_cuisines,
              by = "cuisine_description") %>% 
   count(cuisine_description) %>% 
   mutate(cuisine_description = fct_reorder(cuisine_description, n)) %>% 
-  plot_ly(x = ~cuisine_description, y = ~n, color = ~cuisine_description, type = "bar")
+  plot_ly(x = ~cuisine_description, y = ~n, color = ~cuisine_description, type = "bar") %>% 
+    layout(legend = list(text = "Cuisine type", orientation = "h",
+                     xanchor = "center",
+                     x = 0.5),
+          xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE)
+           )
 ```
 
 Restaurant Inspections {data-width=350}
@@ -50,7 +53,6 @@ nycrest_data %>%
 ```
 
 ###  Restaurant grades
-
 ```{r}
 nycrest_data %>% 
   count(grade) %>% 
