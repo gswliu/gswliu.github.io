@@ -21,6 +21,7 @@ See more about me [here](about.html).
 
 ### Work examples
 [Dashboard](dashboard.html)  
+[GIS](AdvGIS.html)
 <br>
 
 ##### Contact Information

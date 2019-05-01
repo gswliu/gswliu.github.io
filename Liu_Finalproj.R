@@ -1,0 +1,205 @@
+require(spdep)
+require(maptools)
+require(rgdal)
+require(naniar)
+require(tidyverse)
+require(leaflet)
+require(maps)
+require(shiny)
+
+pbe_county = read.csv("./CA_County-level_Exemptions.csv", colClasses = c('character')) %>% 
+  replace_with_na(replace = list(X2011 = 'LNE', X2012 = 'LNE', X2013 = 'LNE', X2014 = 'LNE', X2015 = 'LNE', X2016 = 'LNE')) %>% 
+  mutate(X2011 = replace_na(X2011, 0), 
+         X2012 = replace_na(X2012, 0), 
+         X2013 = replace_na(X2013, 0), 
+         X2014 = replace_na(X2014, 0),
+         X2015 = replace_na(X2015, 0),
+         X2016 = replace_na(X2016, 0)) %>% 
+  janitor::clean_names()
+
+pbe_county$county = tolower(pbe_county$county)
+row.names(pbe_county) = pbe_county$county
+
+ca_cty = map(database = "county", regions = "california", resolution = 0, fill = T)
+
+county_names = strsplit(ca_cty$names,",")
+ca_IDs = sapply(county_names, function(x) x[2])
+
+ca_poly = map2SpatialPolygons(ca_cty, IDs = ca_IDs, proj4string = CRS("+init=epsg:4326"))
+
+pbe_county$county = gsub("(?<=\\b)([a-z])", "\\U\\1", tolower(pbe_county$county), perl=TRUE)
+
+ca_pbe = SpatialPolygonsDataFrame(ca_poly, pbe_county)
+ca_pbe$x2011 = as.numeric(ca_pbe$x2011)
+  ca_pbe$x2012 = as.numeric(ca_pbe$x2012)
+  ca_pbe$x2013 = as.numeric(ca_pbe$x2013)
+  ca_pbe$x2014 = as.numeric(ca_pbe$x2014)
+  ca_pbe$x2015 = as.numeric(ca_pbe$x2015)
+  ca_pbe$x2016 = as.numeric(ca_pbe$x2016)
+# ca_binpal_2011 <- colorBin("YlOrRd", domain = ca_pbe$x2011, 5)
+#   ca_binpal_2012 <- colorBin("YlOrRd", domain = ca_pbe$x2012, 5)
+#   ca_binpal_2013 <- colorBin("YlOrRd", domain = ca_pbe$x2013, 5)
+#   ca_binpal_2014 <- colorBin("YlOrRd", domain = ca_pbe$x2014, 5)
+#   ca_binpal_2015 <- colorBin("YlOrRd", domain = ca_pbe$x2015, 5)
+#   ca_binpal_2016 <- colorBin("YlOrRd", domain = ca_pbe$x2016, 5)
+
+ca_binpal <- colorBin("YlOrRd", domain = ca_pbe$x2015, 5)
+  
+  
+pbe_map <- leaflet(ca_pbe) %>%
+  setView(-119.4179, 36.7783, 5) %>%
+  addTiles()
+
+pbe_map %>% addPolygons()
+
+pbe_2011 = pbe_map %>% 
+  addPolygons(fillColor = ~ca_binpal(x2011),
+              weight = 2,
+              color = 'black',
+              fillOpacity = 0.5,
+              popup = paste("County:", ca_pbe$county, "<br>",
+                            "Year:", "2011", "<br>",
+                            "PBE (%):", ca_pbe$x2011*100, "<br>")
+  ) %>% 
+  addLegend("bottomleft", pal = ca_binpal, values = ~x2011,
+            title = "PBEs",
+            labFormat = labelFormat(transform = function(x2011) 100*x2011, suffix = "%"),
+            opacity = 0.5)
+
+
+pbe_2012 = pbe_map %>% 
+  addPolygons(fillColor = ~ca_binpal(x2012),
+              weight = 2,
+              color = 'black',
+              fillOpacity = 0.5,
+              popup = paste("County:", ca_pbe$county, "<br>",
+                            "Year:", "2012", "<br>",
+                            "PBE (%):", ca_pbe$x2012*100, "<br>")
+  ) %>% 
+  addLegend("bottomleft", pal = ca_binpal, values = ~x2012,
+            title = "PBEs",
+            labFormat = labelFormat(transform = function(x2012) 100*x2012, suffix = "%"),
+            opacity = 0.5)
+
+
+pbe_2013 = pbe_map %>% 
+  addPolygons(fillColor = ~ca_binpal(x2013),
+              weight = 2,
+              color = 'black',
+              fillOpacity = 0.5,
+              popup = paste("County:", ca_pbe$county, "<br>",
+                            "Year:", "2013", "<br>",
+                            "PBE (%):", ca_pbe$x2013*100, "<br>")
+  ) %>% 
+  addLegend("bottomleft", pal = ca_binpal, values = ~x2013,
+            title = "PBEs",
+            labFormat = labelFormat(transform = function(x2013) 100*x2013, suffix = "%"),
+            opacity = 0.5)
+
+
+pbe_2014 = pbe_map %>% 
+  addPolygons(fillColor = ~ca_binpal(x2014),
+              weight = 2,
+              color = 'black',
+              fillOpacity = 0.5,
+              popup = paste("County:", ca_pbe$county, "<br>",
+                            "Year:", "2014", "<br>",
+                            "PBE (%):", ca_pbe$x2014*100, "<br>")
+  ) %>% 
+  addLegend("bottomleft", pal = ca_binpal, values = ~x2014,
+            title = "PBEs",
+            labFormat = labelFormat(transform = function(x2014) 100*x2014, suffix = "%"),
+            opacity = 0.5)
+
+
+pbe_2015 = pbe_map %>% 
+  addPolygons(fillColor = ~ca_binpal(x2015),
+              weight = 2,
+              color = 'black',
+              fillOpacity = 0.5,
+              popup = paste("County:", ca_pbe$county, "<br>",
+                            "Year:", "2015", "<br>",
+                            "PBE (%):", ca_pbe$x2015*100, "<br>")
+  ) %>% 
+  addLegend("bottomleft", pal = ca_binpal, values = ~x2015,
+            title = "PBEs",
+            labFormat = labelFormat(transform = function(x2015) 100*x2015, suffix = "%"),
+            opacity = 0.5)
+
+
+pbe_2016 = pbe_map %>% 
+  addPolygons(fillColor = ~ca_binpal(x2016),
+              weight = 2,
+              color = 'black',
+              fillOpacity = 0.5,
+              popup = paste("County:", ca_pbe$county, "<br>",
+                            "Year:", "2016", "<br>",
+                            "PBE (%):", ca_pbe$x2016*100, "<br>")
+  ) %>% 
+  addLegend("bottomleft", pal = ca_binpal, values = ~x2016,
+            title = "PBEs",
+            labFormat = labelFormat(transform = function(x2016) 100*x2016, suffix = "%"),
+            opacity = 0.5)
+
+# SHINY APP
+
+ui <- fluidPage(h1("Personal Belief Exemptions from Kindergarten Entry Vaccinations"),
+                h2("California, 2011-2016"),
+  fluidRow(column(12,
+                tabsetPanel(
+                  tabPanel("2011", pbe_2011),
+                  tabPanel("2012", pbe_2012),
+                  tabPanel("2013", pbe_2013),
+                  tabPanel("2014", pbe_2014),
+                  tabPanel("2015", pbe_2015),
+                  tabPanel("2016", pbe_2016)
+                ))
+))
+
+server <- function(input, output, session) {
+  
+  output$pbe_map <- renderLeaflet({
+    leaflet(pbe_map) %>%
+      setView(-119.4179, 36.7783, 5) %>%
+      addTiles() 
+  })
+}
+
+shinyApp(ui, server)
+
+
+# ui <- fluidPage(titlePanel("Personal Belief Exemptions from Kindergarten Entry Vaccinations, 2011-2016"),
+#                 sidebarLayout(
+#                   sidebarPanel(
+#                     radioButtons("year_rb", "Year",
+#                                  choices = c("2011", "2012", "2013", "2014", "2015", "2016"),
+#                                  selected = "2011")
+#                   ),
+#                   mainPanel(leafletOutput("pbe_map"))
+#                 )
+# )
+# 
+# server <- function(input, output, session) {
+#   
+#   output$pbe_map <- renderLeaflet({
+#     leaflet(pbe_map) %>%
+#       setView(-119.4179, 36.7783, 5) %>%
+#       addTiles() 
+#   })
+#   
+#   observe(input$year_rb,
+#           {if (input$year_rb == "2011") {
+#             leafletProxy(mapId = "pbe_2011", data = pbe_map) %>% 
+#               addPolygons(fillColor = ~ca_binpal_2011(x2011),
+#                           weight = 2,
+#                           color = 'black',
+#                           fillOpacity = 0.5,
+#                           popup = paste("County:", ca_pbe$county, "<br>",
+#                                         "Year:", "2011", "<br>",
+#                                         "PBE (%):", ca_pbe$x2011*100, "<br>")
+#               )
+#           }
+#           })
+# }
+# 
+# shinyApp(ui, server)

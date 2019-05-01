@@ -8,12 +8,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
 
+<title>Advanced GIS Final Project</title>
 
-
-
-<title>Grace S. Liu</title>
-
-<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<script src="site_libs/jquery-1.12.4/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
@@ -22,6 +19,14 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/htmlwidgets-1.3/htmlwidgets.js"></script>
+<link href="site_libs/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
+<script src="site_libs/leaflet-1.3.1/leaflet.js"></script>
+<link href="site_libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
+<script src="site_libs/Proj4Leaflet-1.0.1/proj4-compressed.js"></script>
+<script src="site_libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
+<link href="site_libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet" />
+<script src="site_libs/leaflet-binding-2.0.2/leaflet.js"></script>
 <link href="site_libs/font-awesome-5.0.13/css/fa-svg-with-js.css" rel="stylesheet" />
 <script src="site_libs/font-awesome-5.0.13/js/fontawesome-all.min.js"></script>
 <script src="site_libs/font-awesome-5.0.13/js/fa-v4-shims.min.js"></script>
@@ -225,35 +230,35 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">Grace S. Liu</h1>
+<h1 class="title toc-ignore">Advanced GIS Final Project</h1>
 
 </div>
 
 
-<p>MPH student, Department of Epidemiology<br />
-Columbia University, Mailman School of Public Health</p>
-<p><img src = "Images/GLiu_Headshot.JPG" 
-  style="width:300px; display: block; margin-left: auto; margin-right: auto; border: 5px solid"> <br></p>
-<div id="about" class="section level3">
-<h3>About</h3>
-<p>I received a BA in public health, with a concentration in Health Policy and Management, from University of California, Berkeley, in 2014. I am currently a second-year MPH student in Epidemiology at the Mailman School of Public Health at Columbia University.</p>
-<p>I previously worked as a technical research analyst in Global Health Science at University of California, San Francisco, on a number of international projects related to HIV prevention, care, and treatment, as well as for an initiative addressing preterm birth in East Africa. I am primarily interested in “leakages” along the HIV care continuum; maternal, neonatal, and child health; health systems strengthening; and implementation science.</p>
-<p>See more about me <a href="about.html">here</a>.<br />
-<br></p>
-</div>
-<div id="work-examples" class="section level3">
-<h3>Work examples</h3>
-<p><a href="dashboard.html">Dashboard</a><br />
-<a href="AdvGIS.html">GIS</a> <br></p>
-<div id="contact-information" class="section level5">
-<h5>Contact Information</h5>
-<p>Grace Liu<br />
-New York, NY<br />
-Email: <a href="mailto:%3Cgsl2116@cumc.columbia.edu%3E">gsl2116@cumc.columbia.edu</a><br />
-Phone: 510.565.6321<br />
-<a href="LiuGrace_CV_Sep2018.pdf">Curriculum Vitae</a></p>
-</div>
-</div>
+<pre class="r"><code>ui &lt;- fluidPage(h1(&quot;Personal Belief Exemptions from Kindergarten Entry Vaccinations&quot;),
+                h2(&quot;California, 2011-2016&quot;),
+  fluidRow(column(12,
+                tabsetPanel(
+                  tabPanel(&quot;2011&quot;, pbe_2011),
+                  tabPanel(&quot;2012&quot;, pbe_2012),
+                  tabPanel(&quot;2013&quot;, pbe_2013),
+                  tabPanel(&quot;2014&quot;, pbe_2014),
+                  tabPanel(&quot;2015&quot;, pbe_2015),
+                  tabPanel(&quot;2016&quot;, pbe_2016)
+                ))
+))
+
+server &lt;- function(input, output, session) {
+  
+  output$pbe_map &lt;- renderLeaflet({
+    leaflet(pbe_map) %&gt;%
+      setView(-119.4179, 36.7783, 5) %&gt;%
+      addTiles() 
+  })
+}
+
+shinyApp(ui, server)</code></pre>
+<div style="width: 100% ; height: 400px ; text-align: center; box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box;" class="muted well">Shiny applications not supported in static R Markdown documents</div>
 
 
 
